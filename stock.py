@@ -1,9 +1,10 @@
 import requests
 import pandas as pd
 import numpy as np
+import time
 from io import StringIO
 
-date = '20210310'
+date = time.strftime("%Y%m%d", time.localtime())
 r = requests.post('http://www.twse.com.tw/exchangeReport/MI_INDEX?response=csv&date=' + date + '&type=ALL')
 
 # 篩選出個股盤後資訊
@@ -19,7 +20,8 @@ pd.set_option('display.max_rows', None)
 df.head(150)
 
 
-### #股票代號
+'''
+#股票代號
 index = list(df['證券代號']).index('9943')
 df.loc[index:index]
 
@@ -29,7 +31,8 @@ df.loc[index:index]
 
 # 挑選本益比小於10的股票
 df[(pd.to_numeric(df['本益比'], errors='coerce') < 10) &
-  (pd.to_numeric(df['本益比'], errors='coerce') > 0)] ###
+  (pd.to_numeric(df['本益比'], errors='coerce') > 0)]
+'''
 
 # 存成csv檔
 df.to_csv('stock\Result.csv', encoding='utf_8_sig')
